@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import UserRoute from "./routes/Userroute.js";
+import Userroute from "./routes/Userroute.js";
 import db from "./databases/Databases.js";
 
 const app = express();
