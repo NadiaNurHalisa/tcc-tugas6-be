@@ -5,9 +5,17 @@ import db from "./databases/Databases.js";
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(UserRoute);
+
+// Routes
+app.use("/catatan", NoteRoute); // semua route dari NoteRoute akan diakses
+
+// Optional: route default untuk cek apakah server jalan
+app.get("/", (req, res) => {
+    res.send("Welcome to the Notes API!");
+});
 
 // Cek koneksi database saat server start
 async function startServer() {
@@ -15,14 +23,16 @@ async function startServer() {
         await db.authenticate();
         console.log("✅ Database connected");
 
-        // Sync database (pilih opsi sesuai kebutuhan)
-        await db.sync({ alter: true }); // Bisa diganti force: true untuk dev
+        // Sync database
+        await db.sync({ alter: true }); // Ubah ke force: true jika ingin reset tabel
 
         const PORT = process.env.PORT || 5000;
-        app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on port ${PORT}`);
+        });
     } catch (error) {
         console.error("❌ Database connection failed:", error.message);
-        console.error(error.stack); // Untuk debugging lebih detail
+        console.error(error.stack);
     }
 }
 
