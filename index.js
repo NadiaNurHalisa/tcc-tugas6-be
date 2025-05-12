@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/catatan", NoteRoute); // semua route dari NoteRoute akan diakses
+app.use("/catatan", Userroute); // semua route dari NoteRoute akan diakses
 
 // Optional: route default untuk cek apakah server jalan
 app.get("/", (req, res) => {
